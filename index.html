@@ -1,10 +1,64 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Simple GitHub Website</title>
+    <meta charset="UTF-8">
+    <title>My RHEL Scripts & Docs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        ul {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+        }
+        li {
+            margin: 8px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #0073e6;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to My Website!</h1>
-    <p>This is hosted on GitHub Pages.</p>
+    <h1>My RHEL Codes & Documents</h1>
+    <p>Click any file below to open:</p>
+    <ul id="file-list"></ul>
+
+    <script>
+        // Replace with your GitHub username & repo name
+        const username = "shahmirhm";
+        const repo = "shahmir.github.io";
+
+        // GitHub API to get files in the root directory
+        fetch(`https://api.github.com/repos/${username}/${repo}/contents/`)
+            .then(response => response.json())
+            .then(files => {
+                const list = document.getElementById("file-list");
+
+                files.forEach(file => {
+                    // Only show HTML files or docs (not folders like .gitignore)
+                    if (file.type === "file") {
+                        const li = document.createElement("li");
+                        li.innerHTML = `<a href="${file.name}" target="_blank">${file.name}</a>`;
+                        list.appendChild(li);
+                    }
+                });
+            })
+            .catch(error => {
+                document.getElementById("file-list").innerHTML = "<li>Error loading file list!</li>";
+                console.error(error);
+            });
+    </script>
 </body>
 </html>
