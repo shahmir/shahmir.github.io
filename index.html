@@ -35,30 +35,74 @@
     <p>Click any file below to open:</p>
     <ul id="file-list"></ul>
 
-    <script>
-        // Replace with your GitHub username & repo name
-        const username = "shahmirhm";
-        const repo = "https://github.com/shahmir/shahmir.github.io";
+<div>
+Environment: Redhat Enterprise Linux 8.10
+shell : ksh
 
-        // GitHub API to get files in the root directory
-        fetch(`https://api.github.com/repos/${username}/${repo}/contents/`)
-            .then(response => response.json())
-            .then(files => {
-                const list = document.getElementById("file-list");
+-----------------------------------------------	  --------------------------------------
+                  ulimit -a	                                 man limits.conf
+-----------------------------------------------	  --------------------------------------
 
-                files.forEach(file => {
-                    // Only show HTML files or docs (not folders like .gitignore)
-                    if (file.type === "file") {
-                        const li = document.createElement("li");
-                        li.innerHTML = `<a href="${file.name}" target="_blank">${file.name}</a>`;
-                        list.appendChild(li);
-                    }
-                });
-            })
-            .catch(error => {
-                document.getElementById("file-list").innerHTML = "<li>Error loading file list!</li>";
-                console.error(error);
-            });
-    </script>
+address space limit (Kibytes)  (-M)  unlimited	   as	- address space limit (KB)
+core file size (blocks)        (-c)  unlimited	   core - limits the core file size (KB)
+cpu time (seconds)             (-t)  unlimited	   cpu - maximum CPU time (minutes)
+data size (Kibytes)            (-d)  unlimited	   data - maximum data size (KB)
+file size (blocks)             (-f)  unlimited	   fsize - maximum filesize (KB)
+locks                          (-x)  unlimited	   locks - maximum locked files
+locked address space (Kibytes) (-l)  64		       memlock - maximum locked-in-memory address space (KB)
+message queue size (Kibytes)   (-q)  800	       msgqueue - maximum memory used by POSIX message queues (bytes)
+nice                           (-e)  0		       nice - maximum nice priority allowed to raise to values: [-20,19]
+nofile                         (-n)  2048	       nofile - maximum number of open file descriptors
+nproc                          (-u)  4096	       nproc - maximum number of processes
+pipe buffer size (bytes)       (-p)  4096	       NA
+max memory size (Kibytes)      (-m)  unlimited	   rss - maximum resident set size (KB)
+rtprio                         (-r)  0		       rtprio - maximum realtime priority allowed for non-privileged processes
+socket buffer size (bytes)     (-b)  4096	       NA
+sigpend                        (-i)  1054719	   sigpending - maximum number of pending signals
+stack size (Kibytes)           (-s)  8192	       stack - maximum stack size (KB)
+swap size (Kibytes)            (-w)  not supported NA
+threads                        (-T)  not supported NA
+process size (Kibytes)         (-v)  unlimited	   as - same as address space limit
+
+
+Entry in /etc/security/limits.conf
+
+* soft  as    unlimited
+* hard  as    unlimited
+* soft  core    unlimited
+* hard	core	       unlimited
+* soft  cpu	     unlimited
+* hard  cpu	     unlimited
+* soft  data	   unlimited
+* hard  data	   unlimited
+* soft  fsize	   unlimited
+* hard  fsize	   unlimited
+* soft  locks	   unlimited
+* hard  locks	   unlimited
+* soft  memlock	 64
+* hard  memlock	 64
+* soft  msgqueue 800
+* hard  msgqueue 800
+* soft  nice	   0
+* hard  nice	   0
+* soft  nofile	 2048
+* hard  nofile	 2048
+* soft 	nproc	   4096
+* hard 	nproc	   4096
+#	pipe buffer size is defined in /etc/sysctl.conf
+*	soft	rss      unlimited
+*	hard	rss	     unlimited
+* soft  rtprio	 0
+* hard  rtprio	 0
+#	socket buffer size - NA in limits.conf
+* soft  sigpending 1054719
+* hard  sigpending 1054719
+* soft  stack 8192
+* hard  stack 8192
+#	swap size not supported
+#	threads not supported
+#	process size - same as address space limit (as)
+
+</div>
 </body>
 </html>
